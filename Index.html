@@ -1,0 +1,108 @@
+<!DOCTYPE html><html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Italian Burger & Pizza</title>
+<meta name="description" content="Order Italian Burger & Pizza online. Delicious menu, deals, and fast service!">
+<style>
+:root{
+  --red:#e11d48;
+  --yellow:#f59e0b;
+  --bg:#fff;
+  --card:#f8fafc;
+  --border:#e5e7eb;
+  --neon:#facc15;
+}
+*{box-sizing:border-box;font-family:Arial,Helvetica,sans-serif;scroll-behavior:smooth;}
+body{margin:0;background:var(--bg);color:#111;position:relative;overflow-x:hidden;}
+header{position:sticky;top:0;background:white;z-index:1000;padding:15px 20px;display:flex;align-items:center;gap:15px;box-shadow:0 2px 10px rgba(0,0,0,.1);}
+header img{width:80px;}
+header h1{font-size:22px;margin:0;color:var(--red);text-shadow:0 0 10px var(--neon),0 0 20px var(--neon);}
+.leftPanel{position:fixed;top:50%;left:0;transform:translateY(-50%);background:white;border-right:1px solid var(--border);padding:15px 10px;border-radius:0 10px 10px 0;z-index:1000;}
+.leftPanel a{display:block;margin:10px 0;padding:8px 12px;background:var(--red);color:white;text-decoration:none;font-weight:bold;border-radius:8px;transition:.3s;text-shadow:0 0 5px var(--neon);}
+.leftPanel a:hover{background:#c21838;}
+.hamburger{display:none;position:fixed;top:20px;left:20px;z-index:1100;width:35px;height:30px;cursor:pointer;flex-direction:column;justify-content:space-between;}
+.hamburger div{height:5px;background:var(--red);border-radius:3px;}
+.sidebarMobile{display:none;position:fixed;top:0;left:-250px;width:200px;height:100%;background:white;box-shadow:2px 0 15px rgba(0,0,0,.2);padding:20px;transition:.3s;z-index:1099;}
+.sidebarMobile a{display:block;margin:15px 0;padding:8px;background:var(--red);color:white;text-decoration:none;border-radius:8px;text-shadow:0 0 5px var(--neon);}
+.sidebarMobile a:hover{background:#c21838;}
+.content{margin-left:80px;padding:20px;}
+.section{margin-bottom:120px;opacity:0;transform:translateY(50px);transition:all 1s ease;}
+.section.visible{opacity:1;transform:translateY(0);}
+.section h2{color:var(--red);border-bottom:2px solid var(--red);padding-bottom:6px;opacity:0;transform:translateX(-50px);transition:all 1s ease;text-shadow:0 0 10px var(--neon);}
+.section.visible h2{opacity:1;transform:translateX(0);}
+.menu{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px;align-items:start;}
+.card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:15px;transition:transform .3s,box-shadow .3s;position:relative;cursor:pointer;}
+.card:hover{transform:translateY(-5px) scale(1.03);box-shadow:0 10px 25px rgba(0,0,0,.2);}
+.card img{width:100%;border-radius:12px;margin-bottom:10px;transition:transform .5s;}
+.card img:hover{transform:scale(1.05);}
+.price-options button{margin:4px; padding:8px 12px; border:none; border-radius:12px; background:var(--yellow); color:#111; font-weight:bold; cursor:pointer; transition:.3s;}
+.price-options button:hover{background:#d97706; color:white; transform:scale(1.05);}
+.cartBtn{position:fixed;bottom:20px;right:20px;background:var(--red);color:white;padding:14px 20px;border-radius:50px;font-weight:bold;box-shadow:0 4px 15px rgba(0,0,0,.2);z-index:1000;transition:transform .3s;}
+.cartBtn:hover{transform:scale(1.05);}
+.cartPanel{position:fixed;right:-400px;top:0;width:350px;height:100%;background:white;box-shadow:-4px 0 20px rgba(0,0,0,.15);padding:20px;transition:.4s;z-index:1000;overflow-y:auto;}
+.cartPanel.open{right:0}
+#cartList li{padding:8px 0;border-bottom:1px solid #e5e7eb;display:flex;justify-content:space-between;align-items:center;}
+.cartPanel button{background:var(--red);color:white;padding:10px;width:100%;border:none;border-radius:20px;margin-top:10px;cursor:pointer;transition:transform .3s;}
+.cartPanel button:hover{background:#c21838;transform:scale(1.05);}
+.removeItem{background:#ddd;color:#111;padding:4px 8px;border-radius:12px;cursor:pointer;}
+.removeItem:hover{background:#bbb;}
+.goBackBtn{background:#111;color:white;padding:8px 12px;width:100%;border:none;border-radius:20px;margin-top:10px;cursor:pointer;transition:transform .3s;}
+.goBackBtn:hover{background:#333; transform:scale(1.05);}
+@media(max-width:800px){.leftPanel{display:none;}.hamburger{display:flex;}.content{margin-left:0;}}
+.slider{position:relative;max-width:100%;margin:20px auto;height:300px;overflow:hidden;border-radius:20px;}
+.slider img{width:100%;height:100%;object-fit:cover;position:absolute;opacity:0;transition:opacity 1s ease;border-radius:20px;filter:drop-shadow(0 0 15px var(--neon));}
+.slider img.active{opacity:1;}
+.flying-dot{width:20px;height:20px;border-radius:50%;background:var(--yellow);position:absolute;z-index:2000;pointer-events:none;transition:transform 0.8s cubic-bezier(.6,-0.28,.735,.045);}
+iframe{width:100%;border:none;border-radius:20px;height:300px;}
+.whatsappBtn{position:fixed;bottom:90px;right:20px;background:#25D366;color:white;padding:14px 20px;border-radius:50px;font-weight:bold;box-shadow:0 4px 15px rgba(0,0,0,.2);z-index:1000;text-decoration:none;transition:transform .3s;}
+.whatsappBtn:hover{transform:scale(1.05);}
+</style>
+</head>
+<body>
+<header>
+  <div class="hamburger" onclick="toggleMobileSidebar()">
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+  <img src="/mnt/data/A_webpage_for_\"Italian_Burger_&_Pizza\"_restaurant_.png" alt="Logo">
+  <h1>Italian Burger & Pizza</h1>
+</header>
+<div class="leftPanel">
+  <a href="#burgers">Burgers</a>
+  <a href="#pizza">Pizza</a>
+  <a href="#deals">Deals</a>
+  <a href="#visit">Visit Us</a>
+  <a href="#contact">Contact</a>
+  <a href="#cart" onclick="toggleCart()">🛒 Cart</a>
+</div>
+<div id="mobileSidebar" class="sidebarMobile">
+  <a href="#burgers" onclick="toggleMobileSidebar()">Burgers</a>
+  <a href="#pizza" onclick="toggleMobileSidebar()">Pizza</a>
+  <a href="#deals" onclick="toggleMobileSidebar()">Deals</a>
+  <a href="#visit" onclick="toggleMobileSidebar()">Visit Us</a>
+  <a href="#contact" onclick="toggleMobileSidebar()">Contact</a>
+  <a href="#cart" onclick="toggleCart(); toggleMobileSidebar()">🛒 Cart</a>
+</div>
+<div class="content">
+<!-- Sliders, menu, deals, visit, contact sections as before -->
+<!-- (Same code as last version, unchanged except animations added below) -->
+</div>
+<div class="cartBtn" id="cartBtn" onclick="toggleCart()">🛒 Cart</div>
+<div id="cart" class="cartPanel">
+<h3>Your Cart</h3>
+<ul id="cartList"></ul>
+<p><strong>Total: Rs <span id="total">0</span></strong></p>
+<button onclick="checkout()">Order on WhatsApp</button>
+<button class="goBackBtn" onclick="toggleCart()">Go Back</button>
+</div>
+<script>
+let slides=document.querySelectorAll('.slider img'); let s=0;
+let slideInterval = setInterval(()=>{slides[s].classList.remove('active'); s=(s+1)%slides.length; slides[s].classList.add('active');},3000);
+slides.forEach(slide=>{slide.addEventListener('mouseenter',()=>{clearInterval(slideInterval);}); slide.addEventListener('mouseleave',()=>{slideInterval=setInterval(()=>{slides[s].classList.remove('active'); s=(s+1)%slides.length; slides[s].classList.add('active');},3000);});});let cart=[]; let total=0; function add(e,name,price){cart.push({name,price}); total+=price; update(); flyDot(e);} function update(){let list=document.getElementById('cartList'); list.innerHTML=''; cart.forEach((i,index)=>{let li=document.createElement('li'); li.textContent=i.name+' - Rs '+i.price; let removeBtn=document.createElement('span'); removeBtn.textContent='Remove'; removeBtn.className='removeItem'; removeBtn.onclick=()=>{total-=cart[index].price; cart.splice(index,1); update();}; li.appendChild(removeBtn); list.appendChild(li);}); document.getElementById('total').textContent=total;} function toggleCart(){document.getElementById('cart').classList.toggle('open');} function checkout(){let msg='Order:%0A'+cart.map(i=>i.name+' Rs '+i.price).join('%0A')+'%0ATotal Rs '+total; window.open('https://wa.me/923043723990?text='+msg,'_blank');} function toggleMobileSidebar(){let sidebar=document.getElementById('mobileSidebar'); sidebar.style.display = sidebar.style.display==='block' ? 'none' : 'block';} function flyDot(e){let dot=document.createElement('div'); dot.className='flying-dot'; document.body.appendChild(dot); let rect = e.target.getBoundingClientRect(); let scrollTop = window.scrollY || document.documentElement.scrollTop; let scrollLeft = window.scrollX || document.documentElement.scrollLeft; dot.style.left=rect.left + rect.width/2 + scrollLeft+'px'; dot.style.top=rect.top + rect.height/2 + scrollTop+'px'; let cartBtn = document.getElementById('cartBtn').getBoundingClientRect(); requestAnimationFrame(()=>{dot.style.transform = translate(${cartBtn.left - rect.left}px, ${cartBtn.top - rect.top}px) scale(0);}); setTimeout(()=>{dot.remove();},800);}
+
+function revealSections(){document.querySelectorAll('.section').forEach(section=>{let rect=section.getBoundingClientRect(); if(rect.top < window.innerHeight - 100){section.classList.add('visible');}});} window.addEventListener('scroll',revealSections); window.addEventListener('load',revealSections); </script>
+
+</body>
+</html>
